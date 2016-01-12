@@ -30,7 +30,7 @@ print numbers[0:10:2]
 print numbers[3:6:3]
 # 捷径
 print numbers[::4]
-# 步长不能为0（不会执行），但可以使复数，此时分片从右到左提取元素
+# 步长不能为0（不会执行），但可以使负数，此时分片从右到左提取元素
 print numbers[8:3:-1]
 print numbers[10:0:-2]
 print numbers[0:10:-2]
