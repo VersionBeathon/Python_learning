@@ -122,3 +122,66 @@ def hello_3(greeting='hello', name='world'):
     print '%s, %s!' % (greeting, name)
 hello_3()
 hello_3(name='Gumby')
+
+
+def hello_4(name, greeting='helllo', punctuation='!'):
+    print '%s, %s%s' % (greeting, name, punctuation)
+hello_4('Mars')
+hello_4('Mars', 'howdy')
+hello_4('mars', 'howdy', 'dd')
+hello_4('Mars', punctuation='.')
+hello_4('Mars', greeting='Top of the morning to ya')
+
+# 收集参数
+
+
+def print_params(*params):
+    print params
+print_params('Testing')
+print_params(1, 2, 3)
+print_params('1', '2', '3')
+
+
+def print_params_2(title, *params):
+    print title
+    print params
+print_params_2('Params:', 1, 2, 3)
+# 星号的意思就是“收集剩余的位置参数”。如果不提供任何供收集的元素，params就是个空元组
+print_params_2('nothing:')
+# 处理关键字参数的“收集”操作
+
+
+def print_params_3(**params):
+    print params
+print_params_3(x=1, y=2, z=3)  # 以字典形式返回
+
+
+def print_params_4(x, y, z=1, *pospar, **keypar):
+    print x, y, z
+    print pospar
+    print keypar
+print_params_4(1, 2, 3, 4, 5, 6, 7, 8, foo=1, bar=2)
+
+# 参数收集的逆过程
+
+
+def add(x, y):
+    return x + y
+# 在调用的时候使用*
+params = (1, 2)
+print add(*params)
+params = {'name': 'Sir Robin', 'greeting': 'Well met'}
+hello_3(**params)
+# 在定义或者调用函数时使用星号（或双星号）仅传递元组或者字典
+
+
+def with_stars(**kwds):
+    print kwds['names'], 'is', kwds['age'], 'years old'
+
+
+def without_stars(kwds):
+    print kwds['names'], 'is', kwds['age'], 'years old'
+args = {'names': 'Mr.Gumby', 'age': 42}
+print with_stars(**args)
+print without_stars(args)
+
