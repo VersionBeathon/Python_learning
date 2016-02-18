@@ -20,7 +20,7 @@ def interval(start, stop=None, step=1):
         result.append(i)
         i += step
     return result
-print story(job='king', name='Gumby')
+print story(job='king', name='Gumby')u
 print story(name='Sir Robin', job='brava knight')
 params = {'job': 'language', 'name': 'Python'}
 print story(**params)
@@ -37,3 +37,4 @@ print interval(10)
 print interval(1, 5)
 print interval(3, 12, 4)
 print power(*interval(3, 7))
+
