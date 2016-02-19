@@ -9,8 +9,8 @@
 函数可以调用自身，如果他这么做了就叫做递归。一切递归实现的功能都可以用循环实现，但是有些时候递归函数更易读
 * 函数式编程：
 Python有一些进行函数编程的机制。包括lambda表达式以及map、filter和reduce函数
-***
-##本章新函数
+
+#本章新函数
 map(func，seq[,seq,...])                      对序列中的每个元素应用函数
 filter(func, seq)                             返回其函数为真的元素的列表
 reduce(func, seq[, initial])                  等同于fun(func(func(seq[0],seq[1]),seq(2))...) 
