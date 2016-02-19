@@ -11,8 +11,10 @@
 Python有一些进行函数编程的机制。包括lambda表达式以及map、filter和reduce函数
 
 #本章新函数
-map(func，seq[,seq,...])                      对序列中的每个元素应用函数
-filter(func, seq)                             返回其函数为真的元素的列表
-reduce(func, seq[, initial])                  等同于fun(func(func(seq[0],seq[1]),seq(2))...) 
-sum(seq)                                      返回seq中所有元素的和
-apply(func[, args[, kwargs]])                 调用函数，可以提供参数
+|函数                                          |描述                                           |
+|----------------------------------------------|：-------------------------------------------：|
+|map(func，seq[,seq,...])                      |对序列中的每个元素应用函数                     |
+|filter(func, seq)                             |返回其函数为真的元素的列表                     |
+|reduce(func, seq[, initial])                  |等同于fun(func(func(seq[0],seq[1]),seq(2))...) |
+|sum(seq)                                      |返回seq中所有元素的和                          |
+|apply(func[, args[, kwargs]])                 |调用函数，可以提供参数                         |
