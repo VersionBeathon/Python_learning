@@ -16,3 +16,11 @@ def add(x, y):
     return x + y
 print add(1, 2)
 print add('Fish', 'license')
+
+#打印对象长度函数
+def length_message(x):
+    print "The length of", repr(x), "is", len(x)
+#repr函数时多态特性的代表之一
+length_message('fnord')
+length_message([1, 2, 3])
+# 注:很多函数和运算符都是多态的，唯一能够毁掉多态的就是使用函数显式地检查类型
