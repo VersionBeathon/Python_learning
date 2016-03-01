@@ -5,3 +5,4 @@
 * [字典](https://github.com/VersionBeathon/Python_learning/tree/master/chapter_4)
 * [语句](https://github.com/VersionBeathon/Python_learning/tree/master/chapter_5)
 * [抽象](https://github.com/VersionBeathon/Python_learning/tree/master/chapter_6)
+* [类](https://github.com/VersionBeathon/Python_learning/tree/master/chapter_7)
