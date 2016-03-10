@@ -1,6 +1,6 @@
 # _*_ coding:utf-8 _*_
 def faulty():
-    rais Exception('Something is wrong!')
+    raise Exception('Something is wrong!')
 def ignore_exception():
     faulty()
 def handle_exception():

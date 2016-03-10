@@ -22,7 +22,7 @@ try:
     x = input('Enter the first number: ')
     y = input("Enter the second number: ")
     print x / y
-except (ZeroDivisionError， TypeError, NameError):
+except (ZeroDivisionError, TypeError, NameError):
     print "The second number can`t be zero!"
 
 # 捕捉对象
@@ -30,7 +30,7 @@ try:
     x = input('Enter the first number: ')
     y = input("Enter the second number: ")
     print x / y
-except (ZeroDivisionError, TypeError), e
+except (ZeroDivisionError, TypeError), e:
     print e
 
 # 真正的全捕捉(用空的except语句)
