@@ -12,3 +12,4 @@ print str(10000000000000)  # str会把值转换为合理形式的字符串
 temp = 42
 print "the temperature is " + `temp` # repr(x)也可以用`x`来实现
 #函数str让字符串更容易于阅读，而repr（和反引号）则把结果字符串转换为合法的Python表达式
+print 

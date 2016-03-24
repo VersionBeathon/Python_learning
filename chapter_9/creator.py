@@ -56,4 +56,4 @@ def flatten3(nested):
                 result.append(element)
     except TypeError:
         result.append(nested)
-    return result
+    return rprint、esult
