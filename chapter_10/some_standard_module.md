@@ -44,6 +44,37 @@ os模块提供了访问多个操作系统服务的功能。os模块包括的内�
 |linesep|行分隔符('\n', '\r', or '\r\n')|
 |urandom(n)|返回n字节的加密强随机数据|
 
+os.environ映射包含本章前面讲述过的环境变量。比如要访问系统变量PYTHONPATH，可以使用表达式os.environ['PYTHONPATH']。这个映射也可以用来更改系统环境变量，不过并非所有系统都支持。
+os.system函数用于运行外部程序。也有一些函数可以执行外部程序，包括execv，它会退出Python解释器，并且将控制权交给被执行程序。还有popen，它可以创建与程序连接的类文件。
+os.sep模块变量是用于路径名中的分隔符
+os.linesep用于文本文件的字符串分隔符。
+urandom函数使用一个依赖于系统的“真”（至少是足够强度加密的）随机数的源。如果正在使用的平台不支持它，你会得到NotImplementError异常。
+
+## fileinput
+fileinput模块让你能够轻松地遍历文本文件的所有行
+UNIX命令下
+```Python
+$ python some_script.py file1.text file2.text file3.text
+```
+这样可以一次对file1.txt到file3.txt文件中的所有进行遍历
+|函数|描述|
+|:-----------------------|:-----------------------|
+|input([files[, inplace[, backup]]])|便于遍历多个输入流中的行|
+|filename()|返回当前文件的名称|
+|lineno()|返回当前（累计）的行数|
+|filelineno()|返回当前文件的行数|
+|isfirstline()|检查当前行是否是文件第一行|
+|isstdin()|检查最后一行是否来自sys.stdin|
+|nextfile()|关闭当前文件，移动到下一个文件|
+|clos()|关闭序列|
+
+fileinput.filename函数返回当前正在处理的文件名(也就是包含了当前正在处理的文本行的文件)
+fileinput.lineno返回当前行的行数。这个数值是累计的，所以在完成一个文件的处理并且开始处理下一个文件的时候，行数并不会重置，而是将上一个文件的最后行数加1作为计数的起始。
+fileinput.filelineno函数返回当前处理文件的当前行数。每次处理完一个文件并且开始处理下一个文件时，行数都会重置为1，然后重新开始计数。
+fileinput.isfirstline函数在当前行是当前文件的第一行时返回真值，反之返回假值。
+fileinput.nextfile函数会关闭当前文件，跳到下一个文件，跳过的行并不计。在你知道当前文件已经处理完的情况下，这个函数就比较有用了————比如每个文件都包含经过排序的单词，而你需要查找某个词。如果已经在排序中推找到了这个词的文职，name你就能放心地跳到下一个文件了。
+file
+
 
 
 
