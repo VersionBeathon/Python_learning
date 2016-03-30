@@ -79,9 +79,29 @@ $ python some_script.py file1.text file2.text file3.text
 * fileinput.close函数关闭整个文件链，结束迭代
 
 ## 集合、堆和双端队列
-[集合]()
 
+### [集合](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/gather.py)
 
+### 堆
 
+它是优先队列的一种。使用优先队列能够以任意顺序增加对象，并且能在任何时间（可能在增加对象的同时）找到（也可能是移除）最小的元素，也就是说它比用于列表的min方法要有效的多。
 
+事实上，Python中并没有独立的堆类型，只有一个包含一些堆操作函数的模块，这个模块叫做heapq（q是queue的缩写，即队列），包括6个函数，其中前4个直接和堆操作相关。
+
+|函数|描述|
+|:-------------------------|:----------------------|
+|heappush(head, x)|将x入堆|
+|heappop(heap)|将堆中最小的元素弹出|
+|heapify(heap)|将heap属性强制应用到任意一个列表|
+|heapreplace(heap, x)|将堆中最小的元素弹出，同时将x入堆|
+|nlargest(n ,iter)|返回iter中第n大的元素|
+|nsmallest(n ,iter)|返回iter中第n小的元素|
+
+* [heappush]函数用于增加堆的项。注意：不能将它用于任何之前讲述的列表中，它只能用于通过各种堆函数建立的列表中。原因是元素的顺序很重要。元素的顺序并不像看起来那么随意。它们虽然不是严格排序的，单是也是有规则的：位于i位置上的元素总比i/2位置处的元素大。这是底层堆算法的基础，而这个特性称为堆属性
+* [heappop]函数弹出最小的元素，一般来说都是在索引0处的函数，并且会确保剩余元素中最小的那个占据这个位置（保持刚才提到的堆属性）
+* [heapify]函数使用任意列表作为参数，并且通过尽可能少的位移操作，将其转换为合法的堆。如果没有用heappush建立推，那么在使用heappush和heappop前应该使用这个函数
+* [heapreplace]函数不像其他函数那么常用。它弹出堆得最小元素，并将新元素推入。这样做比调用heappo之后再调用heappush更高效。
+* heapq模块中剩下的两个函数nlargest(n,iter)和nsmallest(n,iter)分别用来寻找任何可迭代对象iter中第n大或第n小的元素。
+
+### 双端队列
 
