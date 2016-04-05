@@ -97,11 +97,114 @@ $ python some_script.py file1.text file2.text file3.text
 |nlargest(n ,iter)|返回iter中第n大的元素|
 |nsmallest(n ,iter)|返回iter中第n小的元素|
 
-* [heappush]函数用于增加堆的项。注意：不能将它用于任何之前讲述的列表中，它只能用于通过各种堆函数建立的列表中。原因是元素的顺序很重要。元素的顺序并不像看起来那么随意。它们虽然不是严格排序的，单是也是有规则的：位于i位置上的元素总比i/2位置处的元素大。这是底层堆算法的基础，而这个特性称为堆属性
-* [heappop]函数弹出最小的元素，一般来说都是在索引0处的函数，并且会确保剩余元素中最小的那个占据这个位置（保持刚才提到的堆属性）
-* [heapify]函数使用任意列表作为参数，并且通过尽可能少的位移操作，将其转换为合法的堆。如果没有用heappush建立推，那么在使用heappush和heappop前应该使用这个函数
-* [heapreplace]函数不像其他函数那么常用。它弹出堆得最小元素，并将新元素推入。这样做比调用heappo之后再调用heappush更高效。
+* [heappush](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数用于增加堆的项。注意：不能将它用于任何之前讲述的列表中，它只能用于通过各种堆函数建立的列表中。原因是元素的顺序很重要。元素的顺序并不像看起来那么随意。它们虽然不是严格排序的，单是也是有规则的：位于i位置上的元素总比i/2位置处的元素大。这是底层堆算法的基础，而这个特性称为堆属性
+* [heappop](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数弹出最小的元素，一般来说都是在索引0处的函数，并且会确保剩余元素中最小的那个占据这个位置（保持刚才提到的堆属性）
+* [heapify](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数使用任意列表作为参数，并且通过尽可能少的位移操作，将其转换为合法的堆。如果没有用heappush建立推，那么在使用heappush和heappop前应该使用这个函数
+* [heapreplace](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数不像其他函数那么常用。它弹出堆得最小元素，并将新元素推入。这样做比调用heappo之后再调用heappush更高效。
 * heapq模块中剩下的两个函数nlargest(n,iter)和nsmallest(n,iter)分别用来寻找任何可迭代对象iter中第n大或第n小的元素。
 
 ### 双端队列
+[双端队列](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_deque.py)(double-ended queue,或称deque)在需要按照元素增加的顺序来移除元素时非常有用
+。Python2.4增加了collection模块，它包括deque类型。
+
+双端队列好用的原因是它能够有效地在开头（左侧）增加和弹出元素，这是在列表中无法实现的。除此之外，使用双端队列的好处还有:能够优先第旋转(rotate)元素(也就是将它们左移或右移，使头尾相连)。双端队列对象还有extend和extendleft方法，extend和列表的extend方法差不多，extendleft则类似于appandleft。注意，extendleft使用的可迭代对象中的元素会反序出现在双端队列中。
+
+## time
+
+time模块所包含的函数能够实现以下功能：获得当前时间、操作时间和日期、从字符串读取时间以及格式化时间为字符串。日期可以用实数（从“新纪元”的1月1日0点开始计算到现在的描述，新纪元是一个与平台相关的年份，堆Unix来说是1970年），或者包含有9个整数的远足。这些整数的意义如下所示，比如，元组：
+(2008, 1, 21, 12, 2, 56, 0, 21, 0)
+标识2008年1月21日12时2分56秒，星期一，并且是当年的第21天（无夏令时）。
+
+### Python日期元组的字段含义：
+
+|索引|字段|值|
+|:---------|:--------|:-------|
+|0|年|比如2000， 2001， 等等|
+|1|月|范围1~12|
+|2|日|范围1~31|
+|3|时|范围0~23|
+|4|分|范围0~59|
+|5|秒|范围0~61|
+|6|周|当周一为0时，范围0~6|
+|7|儒略日|范围1~366|
+|8|夏令时|0、1、或-1 -1是决定是否为夏令时的旗帜|
+
+秒的范围是0~61是为了应付闰秒和双闰秒。夏令时的数字是布尔值（真或假），但是如果使用了-1，mktime(该函数将这样的远足转换为时间戳，它包含从新纪元开始以来的秒数)就会工作正常。
+
+### time模块中最重要的函数：
+
+|函数|秒数|
+|:---------------|:----------------|
+|asctime([tuple])|将时间远足转换为字符串|
+|localtime([secs])|将秒数转换为日期元组，以本地时间为准|
+|mktime(tuple)|将时间元组转换为本地时间|
+|sleep(secs)|休眠（不做任何事情）secs秒|
+|strptime(string[, format])|将字符串解析为时间元组|
+|time()|当前时间(新纪元开始后的秒数，以UTC为准)|
+
+* 函数time.asctime()将当前时间格式化为字符串：
+```Python
+>>>time.asctime()
+'Fri Dec 21 05:41:27 2008'
+```
+* 函数time.localtime将实数（从新纪元开始计算的秒数）转换为本地时间的日期元组。如果想获得全球统一时间，则可以使用gmtime。
+* 函数time.sleep让解释器等待给定的描述。
+* time.strptime将asctime格式化过的字符串转换为日期元组（可选的格式化参数所遵循的规则与strftime的一样，详情请参见标准文档）
+* 函数time.time使用自新纪元开始计算的秒数返回当前（全球统一）时间，尽管每个平台的新纪元可能不同，但是你仍然可以通过记录某件事情（比如函数调用）发生前后time的结果来对该事件计时，然后计算差值。 
+
+## random
+random模块包括返回随机数的函数，可以用于模拟或者用于任何产生随机输出的程序。（任何计算机产生的随机数都是伪随机数）。 
+
+|函数|描述|
+|:-----------------------|:-------------------|
+|random()|返回 0<n<=1 之间的随机实数n|
+|getrandbits(n)|以长整数形式返回n个随机位|
+|uniform(a, b)|返回随机实数n，其中a<=n<=b |
+|randrange([start], stop, [step])|返回range(start,stop,step)中的随机数|
+|choice(seq)|c从序列seq中返回任意随机元素|
+|shuffle(seq[, random])|原地1指定序列seq|
+|sample(seq, n)|从序列seq中选择n个随机且独立的元素|
+
+* 函数random.random时最基本的随机函数之一，它只是返回0~1的伪随机数n。
+* random.getrandbits以长整型形式返回给定的位数(二进制数)。如果处理的是真正的随机事物（比如加密），这个函数尤为有用。
+* 函数random.uniform提供两个数值参数a和b，它会返回在a~b的随机(平均分布的)实数n。则能够产生该范围内的随机整数
+* 函数random.choice从给定序列中(均一第地)选择随机元素
+* 函数random.shuffle将给定（可变）序列的元素进行随机位移，每种排列的可能性都是近似相等的。
+* 函数random.sample从给定序列中(均一地)选择给定数目的元素，同时确保元素互不相同。
+* [example_of_random&&time]()
+* [dice]()
+* [deck]()
+
+## shelve
+
+shelve.open函数返回的对象并不是普通的映射，这一点尤其要注意，如下所示：
+
+```Python
+>>>import shelve
+>>>s = shelve.open('test.dat')
+>>>s['x'] = ['a', 'b', 'c']
+>>>s['x'].append('d')
+>>>s['x']
+['a', 'b', 'c']
+```
+显然d并没有添加进去：当你在shelf对象中查找元素的时候，这个对象都会根据已经存储的版本进行重新构建，当你将元素赋给某个键的时候，它就被存储了。上述例子中执行的操作如下:
+* 列表['a', 'b', 'c']存储在键x下；
+* 获得存储的标识，并且根据它来创建新的列表，而'd'被添加到这个副本中。修改的版本还没有被保存！
+* 最终，在此获得原始版本————没有'd'
+* 
+为了正确地始终shel模块修改存储的对象，必须将临时变量绑定到获得的副本上，并且在它被修改后重新存储这个副本：
+
+```Python
+>>>temp = s['x']
+>>>temp.append('d')
+>>>s['x'] = temp
+>>>s['x']
+['a', 'b', 'c', 'd']
+```
+
+### [简单的数据库示例](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/database.py)
+
+## re(正则表达式)
+* 过段时间整理，这部分比较难（又乱又难懂，先研究一段时间）
+
 
