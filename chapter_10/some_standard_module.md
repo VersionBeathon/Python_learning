@@ -97,14 +97,14 @@ $ python some_script.py file1.text file2.text file3.text
 |nlargest(n ,iter)|返回iter中第n大的元素|
 |nsmallest(n ,iter)|返回iter中第n小的元素|
 
-* [heappush](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数用于增加堆的项。注意：不能将它用于任何之前讲述的列表中，它只能用于通过各种堆函数建立的列表中。原因是元素的顺序很重要。元素的顺序并不像看起来那么随意。它们虽然不是严格排序的，单是也是有规则的：位于i位置上的元素总比i/2位置处的元素大。这是底层堆算法的基础，而这个特性称为堆属性
-* [heappop](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数弹出最小的元素，一般来说都是在索引0处的函数，并且会确保剩余元素中最小的那个占据这个位置（保持刚才提到的堆属性）
-* [heapify](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数使用任意列表作为参数，并且通过尽可能少的位移操作，将其转换为合法的堆。如果没有用heappush建立推，那么在使用heappush和heappop前应该使用这个函数
-* [heapreplace](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_heapq.py)函数不像其他函数那么常用。它弹出堆得最小元素，并将新元素推入。这样做比调用heappo之后再调用heappush更高效。
+* [heappush](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/example_heapq.py)函数用于增加堆的项。注意：不能将它用于任何之前讲述的列表中，它只能用于通过各种堆函数建立的列表中。原因是元素的顺序很重要。元素的顺序并不像看起来那么随意。它们虽然不是严格排序的，单是也是有规则的：位于i位置上的元素总比i/2位置处的元素大。这是底层堆算法的基础，而这个特性称为堆属性
+* [heappop](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/example_heapq.py)函数弹出最小的元素，一般来说都是在索引0处的函数，并且会确保剩余元素中最小的那个占据这个位置（保持刚才提到的堆属性）
+* [heapify](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/example_heapq.py)函数使用任意列表作为参数，并且通过尽可能少的位移操作，将其转换为合法的堆。如果没有用heappush建立推，那么在使用heappush和heappop前应该使用这个函数
+* [heapreplace](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/example_heapq.py)函数不像其他函数那么常用。它弹出堆得最小元素，并将新元素推入。这样做比调用heappo之后再调用heappush更高效。
 * heapq模块中剩下的两个函数nlargest(n,iter)和nsmallest(n,iter)分别用来寻找任何可迭代对象iter中第n大或第n小的元素。
 
 ### 双端队列
-[双端队列](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/examlple_deque.py)(double-ended queue,或称deque)在需要按照元素增加的顺序来移除元素时非常有用
+[双端队列](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/example_deque.py)(double-ended queue,或称deque)在需要按照元素增加的顺序来移除元素时非常有用
 。Python2.4增加了collection模块，它包括deque类型。
 
 双端队列好用的原因是它能够有效地在开头（左侧）增加和弹出元素，这是在列表中无法实现的。除此之外，使用双端队列的好处还有:能够优先第旋转(rotate)元素(也就是将它们左移或右移，使头尾相连)。双端队列对象还有extend和extendleft方法，extend和列表的extend方法差不多，extendleft则类似于appandleft。注意，extendleft使用的可迭代对象中的元素会反序出现在双端队列中。
@@ -171,9 +171,9 @@ random模块包括返回随机数的函数，可以用于模拟或者用于任�
 * 函数random.choice从给定序列中(均一第地)选择随机元素
 * 函数random.shuffle将给定（可变）序列的元素进行随机位移，每种排列的可能性都是近似相等的。
 * 函数random.sample从给定序列中(均一地)选择给定数目的元素，同时确保元素互不相同。
-* [example_of_random&&time]()
-* [dice]()
-* [deck]()
+* [example_of_random&&time](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/example_of_random.py)
+* [dice](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/dice.py)
+* [deck](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/deck.py)
 
 ## shelve
 
