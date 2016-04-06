@@ -23,7 +23,7 @@ f = open('somefile.txt', 'a')
 f.writelines('\ntest')
 f.close
 
-# 唉使用其他符号作为换行符的平台上，用\r(mac中)和\r\n(windows中)代替\n(由os.linesep决定)
+# 使用其他符号作为换行符的平台上，用\r(mac中)和\r\n(windows中)代替\n(由os.linesep决定)
 
 # 关闭文件
 '''牢记使用close方法关闭文件'''
