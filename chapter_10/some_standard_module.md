@@ -205,6 +205,179 @@ shelve.open函数返回的对象并不是普通的映射，这一点尤其要注
 ### [简单的数据库示例](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/database.py)
 
 ## re(正则表达式)
-* 过段时间整理，这部分比较难（又乱又难懂，先研究一段时间）
 
+re模块中一些重要的函数
 
+|函数|描述|
+|:-------------|:------------------|
+|compile(pattern[, flags])|根据包含正则表达的字符串创建模式对象|
+|search(pattern, string[, plags])|在字符串中需要模式|
+|match(pattern, string[, flags])|在字符串的开始处匹配模式|
+|split(pattern, string[, maxsplit=0])|根据模式的匹配项来分割字符串|
+|findall(pattern,string)|列出字符串中模式的所有匹配项|
+|sub(pat, repl, stringh[, count=0])|将字符串中所有pat的匹配项用repl替换|
+|escape(string)|将字符串中所有特殊正则表达式字符转义|
+
+* re.compile将正则表达式（以字符串书写的）转换为模式对象，可以实现更有效率的匹配。如果在调用search或者match函数的时候使用字符串表示的正则表达式，它们也会在内部将字符串转换为正则表达式对象。使用compile完成一次转换之后，在每次使用模式的时候就不用进行转换。模式对象本身也有查找/匹配的函数，就像方法一样，所以re.search(pat, string)(pat使用字符串表示的正则表达式)等价于pat.search(string)(pat使用compile创建的模式对象)。经过compile转换的正则表达式对象也能用于普通的re函数。
+* re.search会在给定字符串中寻找第一个匹配给定正则表达式的子字符串。一旦找到子字符串，函数就会返回MatchObject(值为True)，否则返回None(值为False)。因为返回值的性质，所以该函数可以用在条件语句中，如下所示
+```Python
+if re.search(pat, string):
+    print 'Found it'
+```
+* 函数re.match会在给定字符串的开头匹配正则表达式。因此，match('p', 'python')返回真（即匹配对象MatchObject），而re.match('p','www.python.org')则返回假(None)。
+* re.split会根据模式的匹配项来分割字符串。它类似于字符串方法splite，不过是用完整行的正则表达式代替了固定的分隔符字符串。比如字符串方法split允许用字符串','的匹配项来分割字符串，耳机re.split则润徐用任意长度的逗号和空格序列来分割字符串:
+```Python
+>>> some_text = 'alpha, beta,,,,gama delta'
+>>> re.split('[, ]+', some_text)
+['alpha', 'beta', 'gamma', 'delta']
+# maxsplite参数表示字符串最多可以分割的次数
+>>> re.split('[, ]+', some_text， maxsplit=2)
+['alpha', 'beta', 'gamma   delta']
+>>> re.split('[, ]+', some_text， maxsplit=1)
+['alpha', 'beta,,,,gamma   delta']
+```
+* re.findall以列表形式返回给定模式的所有匹配项。比如，要在字符串中查找所有的单词，可以如下
+```Python
+>>> pat = '[a-zA-Z]+'
+>>> text = '"Hm... Err -- are you sure?" he said, sounding insecure.'
+>>> re.findall(pat, text)
+['Hmm', 'Err', 'are', 'you', 'sure', 'he', 'said', 'sounding', 'insecure']
+# 查找标点符号
+>>> pat = r'[.?\-",]+' # 转义-
+>>> re.findall(pat, text)
+['"', '...', '--', '?', ',', '.']
+```
+* re.sub的作用在于：使用给定的替换内容将匹配模式的子字符串（最左端并且非重叠的子字符串）替换掉。
+```Python
+>>> pat = '{name}'
+>>> text = 'Dear {name}...'
+>>> re.sub(pat, 'Mr. Gumby', text)
+'Dear Mr. Gumby'
+```
+* re.escape可以对字符串中所有可能被注释为正则运算符的字符进行转义的应用函数。如果字符串很长且包含很多特殊字符，而你又不想输入一大堆反斜线，或者字符串来自于客户。且要用作正则表达式的一部分的时候，可以使用这个函数。
+```Python
+>>> re.escape('www.python.org')
+'www\\.python\\.org'
+>>> re.escape('But where is the ambiguity?')
+'But\\ where\\ is\\ the\\ ambiguity?'
+```
+
+### 匹配对象和组
+
+对于re模块中那些能够对字符串进行模式匹配的函数而言，当能找到匹配项的时候，它们都会返回MatchObject对象。这些对象包括匹配模式的子字符串写的信息。它们还包含了哪个模式匹配了字符串哪部分的信息——这些“部分”叫做组(group)。
+
+简而言之，组就是放置在括号内的子模式。组的序号取决于它左侧的括号书。组0就是整个模式，所以在下面模式中：
+```Python
+'There (was a (wee) (cooper)) who (lived in Fyfe)'
+```
+包含下面这些组：
+```Python
+0 There was a wee cooper who lived in Fyfe
+1 was a wee cooper
+2 wee
+3 cooper
+4 lived in Fyfe
+```
+一般来说，如果组中包括诸如通配符或者重复运算符之类的特殊字符，那么你可能会对是什么与给定组实现了匹配感兴趣，例如
+```Python
+r'www\.(.)\.com$'
+```
+组0包含了整个字符串，而组1则包含了位于'www.'和'.com'之间的所有内容。
+
+re匹配对象的一些重要方法：
+
+|方法|描述|
+|:--------|:--------|
+|group([group1, ...])|获取给定子模式（组）的匹配项|
+|start([group])|返回给定组的匹配项的开始位置|
+|end([group])|返回给定组的匹配项的结束位置（和分片一样，不包括组的结束位置）|
+|span([group])|返回一个组的开始和结束位置|
+
+* group方法返回模式中与给定组的匹配的(子)字符串。如果没有给出组好，默认组为组0.如果给定一个组好（或者只用默认的0），会返回单个字符串。否则会将对应给定组数的字符串作为元组返回。
+* start方法返回给定组匹配项的开始索引（默认为0，即整个模式）。
+* 方法end类似于start，但是返回结果是结束索引加1。
+* 方法span以元组（start, end）的形式返回给定组的开始和结束位置的索引（默认为0， 即整个模式）。
+```Python
+>>> m = re.match(r'www\.(.*)\..{3}', 'www.python.org')
+>>> m.group(1)
+'python'
+>>> m.start(1)
+4
+>>> m.end(1)
+10
+>>> m.span(1)
+(4, 10)
+```
+
+### 作为替换的组号和函数
+在使用re.sub迭代第一个例子中，只是把一个字符串用其他的内容替换调了。正则表达式很有用，因为它们允许以更灵活的方式搜索，同时它们也允许进行功能强大的替换。
+
+见证re.sub强大功能的最简单方式就是在替换字符串中使用组号。在替换内容中以'\\\n'形式出现的任何转义序列都会被模式中与组n匹配的字符串替换掉。假如，假设要把'*something*'用'<em>something</em>'替换掉，前者是在普通文档中进行强调的常见方法，而后者则是相应的HTML代码（用于网页）。首先创建正则表达式：
+```Python
+>>> emphasis_pattern = r'\*(^\*)+\*'
+>>> re.sub(emphasis_pattern, r'<em>\1</em>', 'Hello, *world*!')
+'Hello, <em>world</em>!'
+```
+将函数作为替换内容可以让替换功能变得更加强大。MathObect将作为函数的唯一参数、返回的字符串将会用做替换内容。换句话说，可以对匹配的字符串做任何事，并且可以细化处理过程，以生成替换内容。
+
+### 寻找Email发信人的程序
+```Python
+import fileinput, re
+pat = re.compile('From:(.*)<.*?>$')
+for line in fileinput.input():
+    m = pat.match(line)
+    if m:
+        print m.group(1)
+```
+运行：
+```Unix
+$ python find_sender.py message.eml
+```
+* 用compile函数处理了正则表达式，让处理过程更有效率；
+* 将需要取出的子模式放在圆括号中作为元组；
+* 使用非贪婪模式对邮件地址进行匹配，只有最后一对尖括号复合要求
+* 使用 `$` 符号表明我要匹配整行
+* 使用if语句确保在试图从特定组中取出匹配内容之前，的确进行了匹配。
+
+#### 列出头部信息中所有的Email地址
+```Python
+import fileinput, re
+pat = re.compile(r'[a-z\-\.]+@[a-z\-\.]+', re.IGNORECASE)
+address = set()
+for line in fileinput.input():
+    for address in pat.finall(line):
+        addresses.add(address)
+    for address in sorted(addresses):
+    print address
+```
+运行结果：
+```Uinx
+Mr.Gumby@bar.baz
+foo@bar.baz
+foo@baz.com
+magnus@bozz.floop
+```
+
+### 模版系统实例
+[template.py](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_10/template.py)
+简单来说，程序作了下面的事情：
+* 定义了用于匹配字段的模式。
+* 创建充当模版作用域的字典。
+* 定义具有以下功能的替换函数。
+    1. 强组1从匹配中取出，放入code中；
+    2. 通过将作用域字典作为命名空间来对code进行求值，将结果转换为字符串返回。如果成功，字段就是个表达式，一切正常。否则（引发SyntaxError异常），跳到下一步；
+    3. 执行在相同命名空间（作用域字典）内的字段来对表达式求值，返回空字符串（因为赋值语句没有对任何内容进行求值）。
+* 只用fileinput读取所有可用的行，将其放入列表，组成一个大字符串。
+* 将所有field_pat的匹配项用re.sub的替换函数进行替换，并且打印结果。
+
+## 其他有趣的标准模块
+* functiontools:可以从这个库找一些功能，让你能够通过部分参数来使用某个函数（部分求值），稍后再为剩下的参数提供数值。在Python3.0中，filter和reduce包含在该模块中。
+* difflib:这个库让你可以计算两个序列“最像”的那个。difflib可以用于创建简单的搜索程序。
+* hashlib:通过这个模块，可以通过字符串计算小“签名”（数字）。如果为两个不同的字符串计算出了签名，几乎可以确保这两个签名完全不同。该模块可以用于大文本文件，通知在加密和安全性方面有很多用途。
+* csv:CSV是逗号分隔值（Comma-Separated Values）的缩写，这是一种很多程序（比如很多电子表格和数据库程序）都可以用来存储表格式数据的简写格式。它主要用于在不同程序间交换数据。使用csv模块可以轻松读写CSV文件，同时以显而易见的方式来处理这种格式的某些很难处理的地方。
+* timeit、profile和trace：timeit模块（以及它的命令行脚本）是衡量代码片段运行时间的工具。它有很多神秘的共很难过，应该用它来代替time模块进行性能测试。profile模块（和伴随模块pstats）可用于代码片段效率的全面分析。trace模块（和程序）可以提供总的分析（也就是代码哪部分执行了，哪部分没执行）。在写测试代码的时候很有用。
+* datetime:如果time模块不能满足时间追踪方面的需求，那么datetime可能就有用武之地。它支持特殊日期和时间对象，让你能够以多种方式对它们进行构建和联合。它的结构在很多方面比time的接口要更加直观。
+* itertools:它有很多工具用来创建和联合迭代器（或者其他可迭代对象），还包括实现以下功能的函数：将可迭代的对象链接起来、创建返回无限连续整数的迭代器（和range类似，但没有上限），从而通过重复访问可迭代对象进行循环等等。
+* logging:通过简单的print语句打印出程序的哪些方面很有用。如果希望对程序进行跟踪但又不想打印出太多调试内容，那么久需要将这些信息写入日志文件中。这个模块提供了一组标准的工具，以便让开发人员管理一个或多个核心的日志文件，同时还对日志信息提供了多层系的优先级。
+* getopt和optparse:在UNIX中，命令行程序经常使用不同的选项(option)或者开关(switches)运行（Python解释器就是个典型的例子）。这些信息都可以在sys.argv中找到，但是自己要正确处理它们就没有那么简单。针对这个问题，getop库是个切实可行的解决方案，而optparse则更新，更强大并且更易用。
+* cmd:使用这个模块可以编写命令解释器，就像Python的交互式解释器一样。你可以自定义命令，以便让用户能够通过提示符来执行。
