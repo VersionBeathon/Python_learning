@@ -29,3 +29,19 @@ Python是一个很强大的网络编程工具：
 ### urllib 和 urllib2模块
 
 在能使用的各种网络函数库中，功能最强大的可能是urllib和urllib2.通过它们在网络上访问文件，就好像访问本地电脑上的文件一样。通过一个简单的函数调用，几乎可以把任何URl所指向的东西用做程序的输入。使用这两个模块与re，模块结合使用：可以下载web页面，提取信息，以及自动生成报告等。
+
+这两个模块的功能都差不多，但urllib2更好一些。
+* 如果只使用简单的下载，urllib就足够了。
+* 如果需要使用HTTP验证（HTTP authentication）或cookie，或者要为自己的协议编写扩展程序，urllib2是更好的选择。
+
+1. [打开远程文件]()
+
+可以像打开本地文件一样打开远程文件，不同之处是只能使用只读模式。使用来自urlib模块的urlopen，而不是open（或file）；
+
+2. 获取远程文件
+
+函数urlopen返回一个能从中读取数据的类文件对象。如果希望urllib为你下载文件并在本地文件中存储一个文件的副本，那么可以使用urlretreive。urlretreive返回一个元组（filename, headers）而不是类文件对象，filename是本地文件的名字（由urllib自动创建），headers包含一些远程文件的信息，如果想要为下载的副本指定文件名，可以在urlretrieve函数的第二个参数中给出。
+```Python
+urlretrieve('http://www.python.org', 'C:\\python_webpage.html')
+```
+z这个语句获取Python的主页并把它储存在文件'C:\\\python_webpage.html'中。如果没有指定文件名，文件就会放在临时的位置，用open函数可以打开它，但如果完成了对它的操作，就可以删除它以节省硬盘空间。要清理临时文件，可以调用urlcleanup函数，但不要提供参数，该函数会负责清理工作。

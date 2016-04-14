@@ -120,11 +120,11 @@ Ps:下面只是些例子，究竟怎么练习还没有想好
 ```Unix
 ^once
 ```
-这个模式包含一个特殊的字符^，表示该模式只匹配那些以once开头的字符串。例如该模式与字符串"once upon a time"匹配，与"There once was a man from NewYork"不匹配。正如如^符号表示开头一样，$符号用来匹配那些以给定模式结尾的字符串。
+这个模式包含一个特殊的字符\^，表示该模式只匹配那些以once开头的字符串。例如该模式与字符串"once upon a time"匹配，与"There once was a man from NewYork"不匹配。正如如\^符号表示开头一样，$符号用来匹配那些以给定模式结尾的字符串。
 ```Unix
 bucket$
 ```
-这个模式与"who kept all of this cash in a bucket"匹配，与"buckets"不匹配。字符^和$同时使用，表示精度匹配(字符串与模式一样)。例如：
+这个模式与"who kept all of this cash in a bucket"匹配，与"buckets"不匹配。字符\^和$同时使用，表示精度匹配(字符串与模式一样)。例如：
 ```Unix
 ^bucket$
 ```
