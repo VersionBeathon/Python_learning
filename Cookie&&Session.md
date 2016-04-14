@@ -25,7 +25,7 @@ Cookie就是这样一种机制。它可以弥补HTTP协议无状态的不足。�
 
 ![cookie_transport](http://static.oschina.net/uploads/space/2015/0406/201833_rQQV_120166.png)
 
-在客户端的第二次请求中包含的Cookie投不中，提供给了服务器端可以用来唯一标识客户端身份的信息。这时，服务器端也就可以判断客户端是否启用了cookies。
+在客户端的第二次请求中包含的Cookie头部中，提供给了服务器端可以用来唯一标识客户端身份的信息。这时，服务器端也就可以判断客户端是否启用了cookies。
 
 ### 什么是Cookie
 

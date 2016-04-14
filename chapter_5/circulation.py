@@ -34,7 +34,7 @@ for key, value in d.items():
 names = ['anne', 'beth', 'george', 'damon']
 age = [12, 45, 32, 102]
 for i in rang(len(names)):
-    print name[i], 'is', age[i], 'years old'
+    print names[i], 'is', age[i], 'years old'
 # 内建zip函数可以用来进行并行迭代
 print zip(names, age)
 for name, age in zip(names, age):
@@ -110,7 +110,7 @@ while True:
 
 # 循环中else字句
 from math import sqrt
-for n range(99,81,-1):
+for n in range(99,81,-1):
     root =sqrt(n)
     if root == int(root):
         print n
