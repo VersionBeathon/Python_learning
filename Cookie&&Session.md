@@ -77,6 +77,11 @@ Session生成后，只要用户继续访问，服务器就会更新Session的最
 
 如果客户端浏览器将Cookie功能禁用，或者不支持Cookie怎么办？例如，绝大多数的手机浏览器都不支持Cookie。Java Web提供了另一种解决方案：URL地址重写。
 
+### URL重写
+
+URL重写是对客户端不支持Cookie的解决方案。URL地址重写的原理是将该用户Session的id信息重写到URL地址中。服务器能够解析重写后的URL获取Session的id。这样即使客户端不支持Cookie，也可以使用Session来记录用户状态。
+
+
 ## Cookie与Session的区别
 
 1. cookie数据存放在客户的浏览器上，Session数据放在服务器上；
