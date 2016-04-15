@@ -3,7 +3,7 @@ import socket
 
 s = socket.socket()
 
-host = socket.gethostname() # 获取当前主机名
+host = socket.gethostname()  # 获取当前主机名
 port = 1234                 # 定义接口
 s.bind((host, port))        # 绑定主机名和接口
 
