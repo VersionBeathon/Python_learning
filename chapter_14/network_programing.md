@@ -24,7 +24,7 @@ Python是一个很强大的网络编程工具：
 
 套接字有两个方法，send和recv（用于接收），用于传输数据。可以使用字符串参数调用send以发送数据，用一个所需的（最大）字节数做参数调用recv来接收数据。如果不能确定使用哪个数字比较好，那么1024是个很好的选择。
 
-[simple_server]()和[simple_client]()展示了一个最简单的客户机/服务器程序。如果在同一台机器上运行它们（先启动服务），服务器会打印出发现的一个连接的信息。然后客户端打印从服务端收到的信息。可以在服务器运行同时运行多个客户机。通过用服务器端所在机器的实际主机名来代替客户端调用gethostname所得到的主机名，就可以让两个运行在不同机器上的程序通过网络连接起来。
+[simple_server](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/simple_server.py)和[simple_client](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/simple_client.py)展示了一个最简单的客户机/服务器程序。如果在同一台机器上运行它们（先启动服务），服务器会打印出发现的一个连接的信息。然后客户端打印从服务端收到的信息。可以在服务器运行同时运行多个客户机。通过用服务器端所在机器的实际主机名来代替客户端调用gethostname所得到的主机名，就可以让两个运行在不同机器上的程序通过网络连接起来。
 
 ### urllib 和 urllib2模块
 
@@ -34,7 +34,7 @@ Python是一个很强大的网络编程工具：
 * 如果只使用简单的下载，urllib就足够了。
 * 如果需要使用HTTP验证（HTTP authentication）或cookie，或者要为自己的协议编写扩展程序，urllib2是更好的选择。
 
-1. [打开远程文件]()
+1. [打开远程文件](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/example_of_urllib.py)
 
 可以像打开本地文件一样打开远程文件，不同之处是只能使用只读模式。使用来自urlib模块的urlopen，而不是open（或file）；
 
@@ -107,8 +107,8 @@ SocketServer包含了四个基本的类：针对TCP流式套接字的TCPServer�
 
 注意：Windows不支持分叉
 
-* [使用分叉技术的服务器]()
-* [使用线程处理的服务器]()
+* [使用分叉技术的服务器](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/fork_SocketServer.py)
+* [使用线程处理的服务器](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/treading_SocketSever.py)
 
 ### 带有select和poll的异步I/O
 
@@ -120,7 +120,7 @@ select函数需要3个序列作为它的必选参数，此外还有一个可选�
 
 序列能包含文件对象（在Windows中不行）或者套接字。
 
-* [使用select的为很多连接服务的服务器]()
+* [使用select的为很多连接服务的服务器](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/select_SocketServer.py)
 
 注：fileno方法返回文件描述符整数
 
@@ -140,7 +140,7 @@ if event & select.POLLIN:...
 |POLLHUP|挂起，连接丢失|
 |POLLNVAL|无效请求，连接没有打开|
 
-* [使用poll的简单服务器]()使用poll来代替select。注意：添加了一个文件描述符（ints）到套接字对象的映射（fdmap）。
+* [使用poll的简单服务器](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/poll_SocketServer.py)使用poll来代替select。注意：添加了一个文件描述符（ints）到套接字对象的映射（fdmap）。
 
 ## Twisted
 
@@ -150,9 +150,9 @@ Twisted使用一个事件甚至多个基于事件的方法。要编写基本的�
 
 事件处理程序在一个协议（protocol）中定义；在一个新的连接到达时，同样需要一个创建这种协议对象的工厂（factory），但如果只是想要创建一个通用的协议类的实例，那么就可以使用Twisted自带的工厂。factory类在twisted.internet.protocol模块中。当编写自己的协议时，要使用和超类一样的模块中的protocol。得到了一个连接后，事件处理程序connectionMade就会被调用；丢失了一个连接后，connectionLost就会被调用。来自客户端的数据是通过处理程序dataReceived接收的。当然不能使用事件处理策略来把数据发回到客户端，如果要实现此功能，可以使用对象self.transport，这个对象有一个write方法，也有一个包含客户机地址（主机名和端口号）的client属性。
 
-* [使用Twisted的简单服务器]()
+* [使用Twisted的简单服务器](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/twisted_Server.py)
 
 Twisted版本更简单、容易读。这里只涉及一点设置，必须实例化factory，还要设置它的protocol属性，这样他在和客户机通信时就知道使用什么协议。然后就开始在给定的端口处使用工厂进行监听，这个工厂要通过实例化协议对象来准备处理连接。程序使用的是reactor中的listenTCP函数来监听，最后通过调用同一个模块中的run函数启动服务器。
 
-* [使用了LineReceiver协议改进的记录服务器]()
+* [使用了LineReceiver协议改进的记录服务器](https://github.com/VersionBeathon/Python_learning/blob/master/chapter_14/lineReceiver_Server.py)
 
